@@ -3,9 +3,6 @@
   padding-top: 30px;
   margin: 0px;
 }
-body {
-  background-color: cyan;
-}
 #myCanvas {
   bottom: 0;
   background-color: #eee;

@@ -26,6 +26,7 @@ window.onload = function() {
   var brickOffsetTop = 30;
 
   var score = 0;
+  var lives = 3;
 
   var brick = [];
   for (var c = 0; c < brickColumnCount; c++) {
@@ -53,6 +54,12 @@ window.onload = function() {
     ctx.font = "16px Ariel";
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Score: " + score, 8, 20);
+  }
+
+  function drawLives() {
+    ctx.font = "16px Ariel";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Lives : " + lives, canvas.width - 65, 20);
   }
 
   function drawBricks() {
@@ -138,13 +145,24 @@ window.onload = function() {
 
     drawScore();
 
+    drawLives();
+
     if (y + dy < ballRadius) {
       dy = -dy;
     } else if (y + dy > canvas.height - ballRadius) {
       if (x > paddleX && x < paddleX + paddleWidth) {
         dy = -dy;
       } else {
-        document.location.reload();
+        lives--;
+        if (!lives) {
+          document.location.reload();
+        } else {
+          x = canvas.width / 2;
+          y = canvas.height - 30;
+          dx = 2;
+          dy = -2;
+          paddleX = (canvas.width - paddleWidth) / 2;
+        }
       }
     }
 
@@ -160,6 +178,7 @@ window.onload = function() {
 
     x += dx;
     y += dy;
+    requestAnimationFrame(draw);
   }
-  setInterval(draw, 10);
+  draw();
 };

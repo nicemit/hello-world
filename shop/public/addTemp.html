@@ -1,0 +1,18 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <md-content class="md-padding">
+        <form name="userForm">
+            <div layout layout-sm="column">
+                <md-input-container flex> <label>Item Type</label> <input ng-model="item.what" placeholder="enter item type"> </md-input-container>
+            </div>
+            <div layout layout-sm="column">
+                <md-input-container flex> <label>For?</label> <input ng-model="item.gender"> </md-input-container>
+                <md-input-container flex> <label>Number in Stock</label> <input ng-model="item.instock"> </md-input-container>
+                <md-input-container flex> <label>Number on Order</label> <input ng-model="item.onorder"> </md-input-container>
+            </div>
+        </form>
+    </md-content>
+    <div class="md-actions" layout="row"> <span flex></span>
+        <md-button ng-click="cancel()"> Cancel </md-button>
+        <md-button ng-click="addItem(item)" class="md-primary"> Save </md-button>
+    </div>
+</md-dialog>

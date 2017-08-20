@@ -1,0 +1,121 @@
+<html lang="en" ng-app="StarterApp">
+<title>Shop Details</title>
+
+<head>
+
+</head>
+
+<body layout="row" ng-controller="AppCtrl">
+  <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-tall md-hue-2">
+      <span flex></span>
+      <div layout="column" class="md-toolbar-tools-bottom inset">
+        <user-vatar></user-vatar>
+        <span></span>
+        <div>Firstname Lastname</div>
+        <div>email@domainname.com</div>
+      </div>
+    </md-toolbar>
+    <md-list>
+      <md-item ng-repeat="item in menu">
+        <a>
+          <md-item-content md-ink-ripple layout="row" layout-align="start center">
+            <div class="inset">
+              <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+            </div>
+            <div class="inset">{{item.title}}
+            </div>
+          </md-item-content>
+        </a>
+      </md-item>
+      <md-divider></md-divider>
+      <md-subheader>Management</md-subheader>
+      <md-item ng-repeat="item in admin">
+        <a>
+          <md-item-content md-ink-ripple layout="row" layout-align="start center">
+            <div class="inset">
+              <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+            </div>
+            <div class="inset">{{item.title}}
+            </div>
+          </md-item-content>
+        </a>
+      </md-item>
+    </md-list>
+  </md-sidenav>
+  <div layout="column" class="relative" layout-fill role="main">
+    <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
+      <ng-md-icon icon="add"></ng-md-icon>
+    </md-button>
+
+    <md-toolbar ng-show="!showSearch">
+      <div class="md-toolbar-tools">
+        <md-button ng-click="toggleSidenav('left')" aria-label="Menu">
+          <ng-md-icon icon="menu"></ng-md-icon>
+        </md-button>
+        <h3>
+          Item List
+        </h3>
+        <span flex></span>
+        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+          <ng-md-icon icon="more_vert"></ng-md-icon>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+    <md-toolbar class="md-hue-1" ng-show="showSearch">
+      <div class="md-toolbar-tools">
+        <md-button ng-click="showSearch = !showSearch" aria-label="Back">
+          <ng-md-icon icon="arrow_back"></ng-md-icon>
+        </md-button>
+        <h3 flex="10">
+          Back
+        </h3>
+        <md-input-container md-theme="input" flex>
+          <label>&nbsp;</label>
+          <input ng-model="search.who" placeholder="enter search">
+        </md-input-container>
+        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+          <ng-md-icon icon="search"></ng-md-icon>
+        </md-button>
+        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+          <ng-md-icon icon="more_vert"></ng-md-icon>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+    <div layout='row' class="relative" layout-fill>
+      <md-list ng-cloak flex>
+        <md-list-item class="md-2-line" ng-repeat="item in items">
+          <md-checkbox ng-click="open()"></md-checkbox>
+          <div class="md-list-item-text" layout="column">
+            <h3 class=""><b>{{item.what}}</b></h3>
+            <h4>
+              <span>For: {{item.gender}} </span> |
+              <span>In Stock: {{item.instock}}</span> |
+              <span>On Order: {{item.onorder}}</span>
+            </h4>
+          </div>
+          <md-button aria-label="Delete" ng-click="showListBottomSheet($event)">
+            <ng-md-icon icon="delete"></ng-md-icon>
+          </md-button>
+        </md-list-item>
+        <md-divider></md-divider>
+      </md-list>
+    </div>
+
+  </div>
+
+  <!-- Angular Material Dependencies -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+  <script src="//cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js"></script>
+  <script src="static/controller.js"></script>
+</body>
+
+</html>

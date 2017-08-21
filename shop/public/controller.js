@@ -1,6 +1,6 @@
 var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons']);
 
-app.controller('AppCtrl', ['$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog', function ($scope, $mdBottomSheet, $mdSidenav, $mdDialog) {
+app.controller('AppCtrl', ['$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog', 'itemService', function ($scope, $mdBottomSheet, $mdSidenav, $mdDialog, itemService) {
   $scope.navItems = [
     { value: "page1", label: "Page One" },
     { value: "page2", label: "Page Two" },
@@ -39,32 +39,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog'
       icon: 'settings'
     }
   ];
-  $scope.items = [
-    {
-      what: 'ring',
-      gender: 'men',
-      instock: 10,
-      onorder: 5
-    },
-    {
-      what: 'ring',
-      gender: 'women',
-      instock: 20,
-      onorder: 15
-    },
-    {
-      what: 'bangles',
-      gender: 'women',
-      instock: 50,
-      onorder: 40
-    },
-    {
-      what: 'necklace',
-      gender: 'women',
-      instock: 5,
-      onorder: 10
-    },
-  ];
+  $scope.items = itemService.getItem();
   $scope.alert = '';
   $scope.showListBottomSheet = function ($event) {
     $scope.alert = '';
@@ -77,21 +52,12 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog'
     });
   };
 
-  $scope.showAdd = function ($scope, ev) {
-    console.log("scoppppe", $scope)
+  $scope.showAddDiag = function ($event) {
     $mdDialog.show({
       controller: "DialogController",
       templateUrl: 'static/addTemp.html',
-      targetEvent: ev,
-      locals: {
-        items: $scope.items
-      }
+      targetEvent: $event
     })
-      .then(function (answer) {
-        $scope.alert = 'You said the information was "' + answer + '".';
-      }, function () {
-        $scope.alert = 'You cancelled the dialog.';
-      });
   };
 }]);
 
@@ -109,14 +75,17 @@ app.controller('ListBottomSheetCtrl', function ($scope, $mdBottomSheet) {
   };
 });
 
-app.controller('DialogController', ['$scope', '$mdDialog', function ($scope, $mdDialog, items) {
-  $scope.cancel = function () {
-    $mdDialog.cancel();
+app.controller('DialogController', ['$scope', 'itemService', '$mdDialog', function ($scope, itemService, $mdDialog) {
+  $scope.newItem = function (item) {
+    console.log("new", item)
+    itemService.addItem(item);
+    $mdDialog.hide();
   };
-  $scope.addItem = function (items) {
-    $mdDialog.hide(items);
+  $scope.cancel = function () {
+    $mdDialog.hide();
   };
 }]);
+
 app.directive('userVatar', function () {
   return {
     replace: true,
@@ -141,3 +110,27 @@ app.config(function ($mdThemingProvider) {
     .primaryPalette('grey')
 });
 
+app.service('itemService', function () {
+  var items = [
+    {
+      what: 'ring',
+      gender: 'men',
+      instock: 10,
+      onorder: 5
+    },
+  ];
+
+  var addItem = function (newObj) {
+    items.push(newObj);
+  };
+
+  var getItem = function () {
+    return items;
+  };
+
+  return {
+    addItem: addItem,
+    getItem: getItem
+  };
+
+});
